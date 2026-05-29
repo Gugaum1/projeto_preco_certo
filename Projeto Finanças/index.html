@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Preço Certo</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      background:
+      radial-gradient(circle at top left, rgba(37,99,235,0.35), transparent 25%),
+      radial-gradient(circle at bottom right, rgba(139,92,246,0.35), transparent 25%),
+      #020617;
+      color: white;
+      overflow-x: hidden;
+    }
+
+    .container {
+      display: flex;
+      min-height: 100vh;
+    }
+
+    .sidebar {
+      width: 280px;
+      background: rgba(8,15,40,0.9);
+      border-right: 1px solid rgba(255,255,255,0.08);
+      backdrop-filter: blur(20px);
+      padding: 30px 22px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 50px;
+    }
+
+    .logo-icon {
+      width: 55px;
+      height: 55px;
+      border-radius: 18px;
+      background: linear-gradient(135deg,#2563eb,#7c3aed);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      font-weight: bold;
+      box-shadow: 0 0 25px rgba(59,130,246,0.45);
+    }
+
+    .logo h1 {
+      font-size: 31px;
+      font-weight: 700;
+    }
+
+    .logo p {
+      color: #94a3b8;
+      font-size: 13px;
+    }
+
+    .menu {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .menu button {
+      background: transparent;
+      border: none;
+      color: #cbd5e1;
+      padding: 18px 20px;
+      border-radius: 18px;
+      text-align: left;
+      font-size: 16px;
+      cursor: pointer;
+      transition: 0.3s;
+      font-weight: 500;
+    }
+
+    .menu button:hover,
+    .menu button.active {
+      background: linear-gradient(90deg,#2563eb,#7c3aed);
+      color: white;
+      transform: translateX(5px);
+      box-shadow: 0 0 25px rgba(59,130,246,0.4);
+    }
+
+    .main {
+      flex: 1;
+      padding: 35px;
+    }
+
+    .top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 35px;
+    }
+
+    .top h2 {
+      font-size: 40px;
+      margin-bottom: 8px;
+    }
+
+    .top p {
+      color: #94a3b8;
+    }
+
+    .admin {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.08);
+      padding: 15px 20px;
+      border-radius: 18px;
+      backdrop-filter: blur(12px);
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit,minmax(250px,1fr));
+      gap: 24px;
+      margin-bottom: 30px;
+    }
+
+    .card {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 26px;
+      padding: 28px;
+      backdrop-filter: blur(16px);
+      transition: 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      width: 120px;
+      height: 120px;
+      background: rgba(255,255,255,0.05);
+      border-radius: 50%;
+      right: -40px;
+      top: -40px;
+    }
+
+    .card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 0 30px rgba(59,130,246,0.18);
+    }
+
+    .card h3 {
+      color: #94a3b8;
+      margin-bottom: 12px;
+      font-size: 15px;
+      font-weight: 500;
+    }
+
+    .card p {
+      font-size: 38px;
+      font-weight: bold;
+    }
+
+    .blue {
+      border-color: rgba(59,130,246,0.4);
+    }
+
+    .green {
+      border-color: rgba(34,197,94,0.4);
+    }
+
+    .purple {
+      border-color: rgba(168,85,247,0.4);
+    }
+
+    .orange {
+      border-color: rgba(249,115,22,0.4);
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 25px;
+      margin-bottom: 25px;
+    }
+
+    .panel {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 28px;
+      padding: 28px;
+      backdrop-filter: blur(14px);
+    }
+
+    .panel h3 {
+      margin-bottom: 25px;
+      font-size: 24px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th {
+      color: #60a5fa;
+      text-align: left;
+      padding-bottom: 15px;
+      font-size: 14px;
+    }
+
+    td {
+      padding: 18px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      color: #f1f5f9;
+    }
+
+    .badge {
+      padding: 8px 14px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .ok {
+      background: rgba(34,197,94,0.18);
+      color: #4ade80;
+    }
+
+    .low {
+      background: rgba(239,68,68,0.18);
+      color: #f87171;
+    }
+
+    .form {
+      display: grid;
+      gap: 15px;
+    }
+
+    input {
+      width: 100%;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 16px;
+      padding: 16px;
+      color: white;
+      font-size: 15px;
+      outline: none;
+      transition: 0.3s;
+    }
+
+    input:focus {
+      border-color: #3b82f6;
+      box-shadow: 0 0 18px rgba(59,130,246,0.35);
+    }
+
+    input::placeholder {
+      color: #94a3b8;
+    }
+
+    .btn {
+      background: linear-gradient(90deg,#2563eb,#7c3aed);
+      border: none;
+      padding: 17px;
+      border-radius: 16px;
+      color: white;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.3s;
+      margin-top: 5px;
+    }
+
+    .btn:hover {
+      transform: scale(1.02);
+      box-shadow: 0 0 25px rgba(59,130,246,0.45);
+    }
+
+    .sales {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .sale {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.05);
+      padding: 18px;
+      border-radius: 18px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    @media(max-width:1100px){
+      .grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media(max-width:900px){
+      .container {
+        flex-direction: column;
+      }
+
+      .sidebar {
+        width: 100%;
+      }
+
+      .top {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+
+  <aside class="sidebar">
+
+    <div>
+      <div class="logo">
+        <div class="logo-icon">$</div>
+
+        <div>
+          <h1>Preço Certo</h1>
+          <p>Gestão de Estoque</p>
+        </div>
+      </div>
+
+      <div class="menu">
+        <button class="active" onclick="showTab('dashboard', this)">
+          Dashboard
+        </button>
+
+        <button onclick="showTab('products', this)">
+          Produtos
+        </button>
+
+        <button onclick="showTab('sales', this)">
+          Vendas
+        </button>
+
+        <button onclick="showTab('reports', this)">
+          Relatórios
+        </button>
+      </div>
+    </div>
+
+    <button class="btn">Sair</button>
+  </aside>
+
+  <main class="main">
+
+    <div class="top">
+      <div>
+        <h2>Bem-vindo, Admin 👋</h2>
+        <p>Aqui está o resumo do seu negócio hoje.</p>
+      </div>
+
+      <div class="admin">
+        📅 24 de Maio de 2026
+      </div>
+    </div>
+
+    <section id="dashboard" class="tab">
+
+      <div class="cards">
+
+        <div class="card blue">
+          <h3>FATURAMENTO</h3>
+          <p id="revenue">R$ 0</p>
+        </div>
+
+        <div class="card green">
+          <h3>LUCRO</h3>
+          <p id="profit">R$ 0</p>
+        </div>
+
+        <div class="card purple">
+          <h3>PRODUTOS</h3>
+          <p id="productsCount">0</p>
+        </div>
+
+        <div class="card orange">
+          <h3>ESTOQUE BAIXO</h3>
+          <p id="lowStock">0</p>
+        </div>
+      </div>
+
+      <div class="grid">
+
+        <div class="panel">
+          <h3>Produtos em Estoque</h3>
+
+          <table>
+            <thead>
+              <tr>
+                <th>Produto</th>
+                <th>Estoque</th>
+                <th>Compra</th>
+                <th>Venda</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+
+            <tbody id="productTable"></tbody>
+          </table>
+        </div>
+
+        <div class="panel">
+          <h3>Últimas Vendas</h3>
+
+          <div class="sales" id="salesList"></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="products" class="tab hidden">
+
+      <div class="grid">
+
+        <div class="panel">
+          <h3>Cadastrar Produto</h3>
+
+          <form class="form" id="productForm">
+            <input type="text" id="name" placeholder="Nome do Produto" required>
+            <input type="number" id="stock" placeholder="Quantidade em Estoque" required>
+            <input type="number" id="buy" placeholder="Preço de Compra" required>
+            <input type="number" id="sell" placeholder="Preço de Venda" required>
+
+            <button class="btn" type="submit">
+              Cadastrar Produto
+            </button>
+          </form>
+        </div>
+
+        <div class="panel">
+          <h3>Resumo</h3>
+
+          <div class="cards">
+            <div class="card blue">
+              <h3>Total de Produtos</h3>
+              <p id="summaryProducts">0</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="sales" class="tab hidden">
+
+      <div class="grid">
+
+        <div class="panel">
+          <h3>Registrar Venda</h3>
+
+          <form class="form" id="saleForm">
+            <input type="text" id="saleProduct" placeholder="Nome do Produto" required>
+            <input type="number" id="saleQuantity" placeholder="Quantidade Vendida" required>
+
+            <button class="btn" type="submit">
+              Registrar Venda
+            </button>
+          </form>
+        </div>
+
+        <div class="panel">
+          <h3>Informações</h3>
+
+          <p style="line-height:2;color:#cbd5e1;">
+            O sistema atualiza automaticamente os estoques,
+            faturamento e lucro após cada venda realizada.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section id="reports" class="tab hidden">
+
+      <div class="panel">
+        <h3>Relatório Financeiro</h3>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Produto</th>
+              <th>Vendidos</th>
+              <th>Lucro Gerado</th>
+            </tr>
+          </thead>
+
+          <tbody id="reportTable"></tbody>
+        </table>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<script>
+
+  const products = [
+    {
+      name: 'Mouse Gamer',
+      stock: 20,
+      buy: 50,
+      sell: 120,
+      sold: 3
+    },
+    {
+      name: 'Teclado Mecânico RGB',
+      stock: 12,
+      buy: 120,
+      sell: 250,
+      sold: 2
+    },
+    {
+      name: 'Headset Gamer',
+      stock: 7,
+      buy: 90,
+      sell: 180,
+      sold: 1
+    }
+  ];
+
+  const sales = [
+    {
+      product: 'Mouse Gamer',
+      quantity: 1,
+      total: 120
+    },
+    {
+      product: 'Teclado Mecânico RGB',
+      quantity: 1,
+      total: 250
+    }
+  ];
+
+  function showTab(id, element){
+
+    document.querySelectorAll('.tab').forEach(tab => {
+      tab.classList.add('hidden');
+    });
+
+    document.getElementById(id).classList.remove('hidden');
+
+    document.querySelectorAll('.menu button').forEach(btn => {
+      btn.classList.remove('active');
+    });
+
+    element.classList.add('active');
+  }
+
+  function updateDashboard(){
+
+    const productTable = document.getElementById('productTable');
+    const salesList = document.getElementById('salesList');
+    const reportTable = document.getElementById('reportTable');
+
+    productTable.innerHTML = '';
+    salesList.innerHTML = '';
+    reportTable.innerHTML = '';
+
+    let revenue = 0;
+    let profit = 0;
+
+    products.forEach(product => {
+
+      revenue += product.sold * product.sell;
+      profit += product.sold * (product.sell - product.buy);
+
+      productTable.innerHTML += `
+        <tr>
+          <td>${product.name}</td>
+          <td>${product.stock}</td>
+          <td>R$ ${product.buy.toFixed(2)}</td>
+          <td>R$ ${product.sell.toFixed(2)}</td>
+          <td>
+            ${product.stock <= 10
+            ? '<span class="badge low">Baixo</span>'
+            : '<span class="badge ok">OK</span>'}
+          </td>
+        </tr>
+      `;
+
+      const generatedProfit = product.sold * (product.sell - product.buy);
+
+      reportTable.innerHTML += `
+        <tr>
+          <td>${product.name}</td>
+          <td>${product.sold}</td>
+          <td style="color:#4ade80;font-weight:bold;">
+            R$ ${generatedProfit.toFixed(2)}
+          </td>
+        </tr>
+      `;
+    });
+
+    sales.slice().reverse().forEach(item => {
+
+      salesList.innerHTML += `
+        <div class="sale">
+          <div>
+            <strong>${item.product}</strong><br>
+            <span style="color:#94a3b8;">
+              ${item.quantity} unidade(s)
+            </span>
+          </div>
+
+          <div style="font-weight:bold;color:#4ade80;">
+            R$ ${item.total.toFixed(2)}
+          </div>
+        </div>
+      `;
+    });
+
+    document.getElementById('revenue').innerText = `R$ ${revenue.toFixed(2)}`;
+    document.getElementById('profit').innerText = `R$ ${profit.toFixed(2)}`;
+    document.getElementById('productsCount').innerText = products.length;
+    document.getElementById('summaryProducts').innerText = products.length;
+
+    const lowStock = products.filter(p => p.stock <= 10).length;
+    document.getElementById('lowStock').innerText = lowStock;
+  }
+
+  document.getElementById('productForm').addEventListener('submit', function(e){
+
+    e.preventDefault();
+
+    const name = document.getElementById('name').value;
+    const stock = Number(document.getElementById('stock').value);
+    const buy = Number(document.getElementById('buy').value);
+    const sell = Number(document.getElementById('sell').value);
+
+    products.push({
+      name,
+      stock,
+      buy,
+      sell,
+      sold: 0
+    });
+
+    updateDashboard();
+
+    alert('Produto cadastrado com sucesso!');
+
+    this.reset();
+  });
+
+  document.getElementById('saleForm').addEventListener('submit', function(e){
+
+    e.preventDefault();
+
+    const productName = document.getElementById('saleProduct').value;
+    const quantity = Number(document.getElementById('saleQuantity').value);
+
+    const product = products.find(
+      p => p.name.toLowerCase() === productName.toLowerCase()
+    );
+
+    if(!product){
+      alert('Produto não encontrado!');
+      return;
+    }
+
+    if(product.stock < quantity){
+      alert('Estoque insuficiente!');
+      return;
+    }
+
+    product.stock -= quantity;
+    product.sold += quantity;
+
+    sales.push({
+      product: product.name,
+      quantity,
+      total: quantity * product.sell
+    });
+
+    updateDashboard();
+
+    alert('Venda registrada com sucesso!');
+
+    this.reset();
+  });
+
+  updateDashboard();
+
+</script>
+
+</body>
+</html>
